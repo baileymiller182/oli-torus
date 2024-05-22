@@ -626,6 +626,31 @@ defmodule OliWeb.Components.Common do
     """
   end
 
+  attr(:label, :string, default: "")
+
+  attr(:percent, :integer, required: true)
+  attr(:height, :string, default: "h-1")
+
+  attr(:color, :string,
+    default: "bg-[#1E9531]",
+    doc: "the colour of the progress bar when progress < 100%"
+  )
+
+  def activity_bar(assigns) do
+    ~H"""
+    <div title="Time" class="group ml-4 relative select-none">
+      <div class="flex flex-col">
+        <p class="text-2xs text-slate-400 group-hover:opacity-0 group-hover:-translate-y-3 duration-300 ease-in-out"><%= @label %></p>
+        <p class={["font-medium absolute opacity-0 group-hover:opacity-100 top-5 group-hover:top-[1px] ease-in-out duration-300 text-2xs", "text-" <> @color]}><%= Integer.to_string(@percent) <> "%" %></p>
+        <div class="group-hover:translate-y-0.5 ease-in-out duration-300 my-1 relative w-20 flex justify-center">
+          <div class="h-1.5 w-full bg-slate-200 rounded-full"></div>
+          <div style={"right: #{100 - @percent}%"} class={["absolute top-0 left-0 h-1.5 rounded-full", "bg-" <> @color]}></div>
+        </div>
+      </div>
+    </div>
+    """
+  end
+
   attr(:role, :string)
   attr(:id, :string)
   attr(:button_class, :string)

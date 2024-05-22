@@ -98,3 +98,9 @@ _imports
 logfile
 MnesiaCore.nonode@nohost_1698_943806_800396
 .envrc
+
+# Ignore automatically generated Svelte files by the ~V sigil
+/assets/svelte/_build/
+
+# Ignore ssr build for svelte.
+/priv/svelte/

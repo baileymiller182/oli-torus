@@ -88,7 +88,7 @@ http_max_headers = System.get_env("HTTP_MAX_HEADERS", "100") |> String.to_intege
 # with webpack to recompile .js and .css sources.
 config :oli, OliWeb.Endpoint,
   http: [
-    port: String.to_integer(System.get_env("HTTP_PORT", "80")),
+    port: String.to_integer(System.get_env("HTTP_PORT", "81")),
     protocol_options: [
       max_header_name_length: http_max_header_name_length,
       max_header_value_length: http_max_header_value_length,
@@ -98,10 +98,10 @@ config :oli, OliWeb.Endpoint,
   url: [
     scheme: System.get_env("SCHEME", "https"),
     host: System.get_env("HOST", "localhost"),
-    port: String.to_integer(System.get_env("PORT", "443"))
+    port: String.to_integer(System.get_env("PORT", "444"))
   ],
   https: [
-    port: String.to_integer(System.get_env("HTTPS_PORT", "443")),
+    port: String.to_integer(System.get_env("HTTPS_PORT", "444")),
     otp_app: :oli,
     keyfile: System.get_env("SSL_KEY_PATH", "priv/ssl/localhost.key"),
     certfile: System.get_env("SSL_CERT_PATH", "priv/ssl/localhost.crt"),

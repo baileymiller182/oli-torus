@@ -557,7 +557,6 @@ export class PageEditor extends React.Component<PageEditorProps, PageEditorState
     const executeAction = (message: any, action: any) => action.execute(message);
 
     return (
-      <React.StrictMode>
         <AppsignalContext.Provider value={this.state.appsignal}>
           <ModalDisplay />
 
@@ -629,7 +628,6 @@ export class PageEditor extends React.Component<PageEditorProps, PageEditorState
             </div>
           </ErrorBoundary>
         </AppsignalContext.Provider>
-      </React.StrictMode>
     );
   }
 }

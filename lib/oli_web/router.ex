@@ -255,6 +255,12 @@ defmodule OliWeb.Router do
     get("/keep-alive", StaticPageController, :keep_alive)
   end
 
+  scope "/intuition", OliWeb do
+    pipe_through([:browser])
+
+    live("/", Intuition.IntuitionView)
+  end
+
   scope "/authoring", as: :authoring do
     pipe_through([:browser, :authoring, :registration_captcha, :pow_email_layout])
 
