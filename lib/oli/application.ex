@@ -9,6 +9,7 @@ defmodule Oli.Application do
     # List all child processes to be supervised
     children =
       [
+        :debugger,
         # libcluster config
         {Cluster.Supervisor,
          [Application.fetch_env!(:libcluster, :topologies), [name: Oli.ClusterSupervisor]]},

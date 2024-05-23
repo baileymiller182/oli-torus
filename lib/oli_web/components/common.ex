@@ -633,18 +633,22 @@ defmodule OliWeb.Components.Common do
 
   attr(:color, :string,
     default: "bg-[#1E9531]",
-    doc: "the colour of the progress bar when progress < 100%"
+    doc: "the colour of the progress bar"
+  )
+  attr(:textcolor, :string,
+    default: "bg-[#1E9531]",
+    doc: "the colour of the progress bar text"
   )
 
   def activity_bar(assigns) do
     ~H"""
     <div title="Time" class="group ml-4 relative select-none">
       <div class="flex flex-col">
-        <p class="text-2xs text-slate-400 group-hover:opacity-0 group-hover:-translate-y-3 duration-300 ease-in-out"><%= @label %></p>
-        <p class={["font-medium absolute opacity-0 group-hover:opacity-100 top-5 group-hover:top-[1px] ease-in-out duration-300 text-2xs", "text-" <> @color]}><%= Integer.to_string(@percent) <> "%" %></p>
+        <p class="text-xs text-slate-400 group-hover:opacity-0 group-hover:-translate-y-3 duration-300 ease-in-out"><%= @label %></p>
+        <p class={["font-medium absolute opacity-0 group-hover:opacity-100 top-5 group-hover:top-[1px] ease-in-out duration-300 text-xs", @textcolor]}><%= Integer.to_string(@percent) <> "%" %></p>
         <div class="group-hover:translate-y-0.5 ease-in-out duration-300 my-1 relative w-20 flex justify-center">
           <div class="h-1.5 w-full bg-slate-200 rounded-full"></div>
-          <div style={"right: #{100 - @percent}%"} class={["absolute top-0 left-0 h-1.5 rounded-full", "bg-" <> @color]}></div>
+          <div style={"right: #{100 - @percent}%"} class={["absolute top-0 left-0 h-1.5 rounded-full", @color]}></div>
         </div>
       </div>
     </div>

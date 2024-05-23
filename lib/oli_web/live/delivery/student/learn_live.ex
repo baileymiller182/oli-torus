@@ -743,8 +743,6 @@ defmodule OliWeb.Delivery.Student.LearnLive do
     """
   end
 
-
-
   def render(%{selected_view: :intuition} = assigns) do
     ~H"""
     <div id="student_learn" class="lg:container lg:mx-auto p-[25px]" phx-hook="Scroller">
@@ -757,32 +755,15 @@ defmodule OliWeb.Delivery.Student.LearnLive do
         />
       </div>
       <div id="weeks_container" phx-update="append">
-        <.week
-          :for={unit <- @units}
-          unit={unit}
-          ctx={@ctx}
-          student_progress_per_resource_id={@student_progress_per_resource_id}
-          student_end_date_exceptions_per_resource_id={@student_end_date_exceptions_per_resource_id}
-          selected_module_per_unit_resource_id={@selected_module_per_unit_resource_id}
-          student_raw_avg_score_per_page_id={@student_raw_avg_score_per_page_id}
-          viewed_intro_video_resource_ids={@viewed_intro_video_resource_ids}
-          progress={
-            parse_student_progress_for_resource(
-              @student_progress_per_resource_id,
-              unit["resource_id"]
-            )
-          }
-          student_id={@current_user.id}
-          unit_raw_avg_score={
-            Map.get(
-              @student_raw_avg_score_per_container_id,
-              unit["resource_id"],
-              %{}
-            )
-          }
-          assistant_enabled={@assistant_enabled}
-          display_props_per_module_id={@display_props_per_module_id}
-        />
+        <%= for unit <- @units do %>
+          <.live_component
+            id={"weeks-" <> Integer.to_string(unit["resource_id"])}
+            module={OliWeb.Delivery.Student.Learn.Components.Week}
+            unit={unit}
+            student_progress_per_resource_id={@student_progress_per_resource_id}
+            expanded={false}
+          />
+        <% end %>
       </div>
     </div>
     """
@@ -800,44 +781,7 @@ defmodule OliWeb.Delivery.Student.LearnLive do
   attr :unit_raw_avg_score, :map
   attr :assistant_enabled, :boolean, required: true
   attr :display_props_per_module_id, :map
-
-  def week(%{unit: %{"resource_type_id" => 1}} = assigns) do
-    ~H"""
-    <div id={"top_level_page_#{@unit["resource_id"]}"} tabindex="0" class="bg-white rounded-lg py-6 px-8 shadow-shadowed mb-4">
-      <div class="flex flex-row items-center">
-        <h1 class="text-lg font-bold tracking-tight text-slate-800">
-          <%= "Week #{@unit["numbering"]["index"]}" %>
-        </h1>
-        <h1 class="mx-2 text-sm">•</h1>
-        <h1 class="font-medium mr-auto tracking-tight text-slate-400 text-sm">
-          <%= @unit["title"] %>
-        </h1>
-        <p class="text-2xs font-medium text-slate-400 mr-8 whitespace-nowrap">1h 39m</p>
-        <.activity_bar
-          label="Time"
-          percent={@progress}
-          color="[#A855F7]"
-        />
-        <.activity_bar
-          label="Learning"
-          percent={@progress}
-          color="[#06B6D4]"
-        />
-        <.activity_bar
-          label="Practice"
-          percent={@progress}
-          color="[#34D399]"
-        />
-        <.activity_bar
-          label="Assessment"
-          percent={@progress}
-          color="[#F97316]"
-        />
-      </div>
-    </div>
-    """
-
-  end
+  attr :expanded, :boolean
 
   # top level page as a card with title and header
   def gallery_row(%{unit: %{"resource_type_id" => 1}} = assigns) do
