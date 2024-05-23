@@ -159,6 +159,11 @@ defmodule OliWeb.Delivery.Student.LearnLive do
     end
   end
 
+
+  defp scroll_to_target_resource(socket, resource_id, _full_hierarchy, :intuition) do
+    socket
+  end
+
   defp scroll_to_target_resource(socket, resource_id, full_hierarchy, :gallery) do
     case Sections.get_section_resource_with_resource_type(
            socket.assigns.section.slug,
@@ -754,6 +759,16 @@ defmodule OliWeb.Delivery.Student.LearnLive do
           selected_view={@selected_view}
         />
       </div>
+      <div class="bg-white rounded-lg py-6 px-8 shadow-shadowed my-4">
+        <div class="flex flex-row items-center">
+          <h1 class="text-2xl font-bold tracking-tight mr-auto">Calculus I</h1>
+        </div>
+        <div class="flex flex-row mt-2 mb-3">
+          <div class="px-2 py-1 rounded-lg text-2xs font-medium bg-slate-200 text-slate-500 mr-2">10 weeks</div>
+          <div class="px-2 py-1 rounded-lg text-2xs font-medium bg-emerald-100 text-emerald-500">Ready</div>
+        </div>
+        <h2 class="text-sm">An adventurous journey through the world of limits, derivatives, and integrals, where you'll unlock the secrets of continuously changing quantities.</h2>
+      </div>
       <div id="weeks_container" phx-update="append">
         <%= for unit <- @units do %>
           <.live_component
@@ -762,6 +777,7 @@ defmodule OliWeb.Delivery.Student.LearnLive do
             unit={unit}
             student_progress_per_resource_id={@student_progress_per_resource_id}
             expanded={false}
+            section={@section}
           />
         <% end %>
       </div>

@@ -1,4 +1,5 @@
 defmodule OliWeb.Delivery.Student.Learn.Components.LearningModule do
+  require Logger
   use OliWeb, :live_component
 
   alias OliWeb.Delivery.Student.Utils
@@ -14,7 +15,8 @@ defmodule OliWeb.Delivery.Student.Learn.Components.LearningModule do
       id: assigns.id,
       learning_module: assigns.learning_module,
       progress: progress,
-      student_progress_per_resource_id: assigns.student_progress_per_resource_id
+      student_progress_per_resource_id: assigns.student_progress_per_resource_id,
+      section: assigns.section
     )
     {:ok, socket}
   end
@@ -39,6 +41,7 @@ defmodule OliWeb.Delivery.Student.Learn.Components.LearningModule do
   defp parse_minutes(minutes), do: minutes
 
   defp activity_info(assigns) do
+    Logger.info(assigns.learning_module)
     ~H"""
       <div class="flex flex-row items-center">
         <h1 class="text-lg font-bold tracking-tight text-slate-800">
@@ -83,6 +86,8 @@ defmodule OliWeb.Delivery.Student.Learn.Components.LearningModule do
         <button
           phx-click="select_module"
           phx-target={@myself}
+          phx-value-slug={assigns.learning_module["slug"]}
+          phx-value-resource_id={assigns.learning_module["resource_id"]}
         >
           <div class={"w-8 h-[36px] py-2.5 px-2.5 justify-center items-center flex gap-2.5 -rotate-90"}>
             <.chevron_icon />
@@ -98,7 +103,7 @@ defmodule OliWeb.Delivery.Student.Learn.Components.LearningModule do
   def navigate_to_resource(values, socket) do
     section_slug = socket.assigns.section.slug
     resource_id = values["resource_id"] || values["module_resource_id"]
-    selected_view = values["view"] || :gallery
+    selected_view = :intuition
 
     {:noreply,
      push_redirect(socket,

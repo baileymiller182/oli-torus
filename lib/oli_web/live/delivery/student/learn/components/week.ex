@@ -17,7 +17,8 @@ defmodule OliWeb.Delivery.Student.Learn.Components.Week do
       unit: assigns.unit,
       student_progress_per_resource_id: assigns.student_progress_per_resource_id,
       expanded: assigns.expanded,
-      progress: progress
+      progress: progress,
+      section: assigns.section
     )
     {:ok, socket}
   end
@@ -54,6 +55,7 @@ defmodule OliWeb.Delivery.Student.Learn.Components.Week do
                 module={OliWeb.Delivery.Student.Learn.Components.LearningModule},
                 learning_module={learning_module}
                 student_progress_per_resource_id={assigns.student_progress_per_resource_id}
+                section={assigns.section}
               />
           </div>
         </div>
